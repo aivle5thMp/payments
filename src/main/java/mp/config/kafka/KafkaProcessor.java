@@ -9,6 +9,15 @@ public interface KafkaProcessor {
     String INPUT = "event-in";
     String OUTPUT = "event-out";
 
+    String POINTS_OUTPUT = "points-out";
+    String SUBSCRIPTION_OUTPUT = "subscription-out";
+
+    @Output(POINTS_OUTPUT)
+    MessageChannel pointsOutbound();
+
+    @Output(SUBSCRIPTION_OUTPUT)
+    MessageChannel subscriptionOutbound();
+    
     @Input(INPUT)
     SubscribableChannel inboundTopic();
 

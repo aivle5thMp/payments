@@ -35,7 +35,8 @@ public class PaymentController {
         payment.setAmount(req.getAmount());
         payment.setStatus("APPROVED");
         payment.setCreatedAt(LocalDateTime.now());
-
+        payment.setUsedPoint(req.getPoint());
+        
         paymentRepository.save(payment);
 
         return new PaymentResponseDto(payment.getStatus(), payment.getCreatedAt());

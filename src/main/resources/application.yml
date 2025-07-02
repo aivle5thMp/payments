@@ -1,5 +1,5 @@
 server:
-  port: 8080
+  port: 8086
 
 spring:
   application:
@@ -39,14 +39,16 @@ spring:
       bindings:
         event-in:
           group: payments
-#<<< EDA / Topic Name
           destination: mp
-#>>> EDA / Topic Name
           contentType: application/json
         event-out:
-#<<< EDA / Topic Name
           destination: mp
-#>>> EDA / Topic Name
+          contentType: application/json
+        points-out:
+          destination: payment.points.success
+          contentType: application/json
+        subscription-out:
+          destination: payment.subscription.success
           contentType: application/json
 
 logging:
@@ -56,7 +58,7 @@ logging:
 
 api:
   url: 
-    payments: localhost:8088 
+    payments: localhost:8086
     
 
 server:
@@ -93,9 +95,15 @@ spring:
         event-out:
           destination: mp
           contentType: application/json
+        points-out:
+          destination: payment.points.success
+          contentType: application/json
+        subscription-out:
+          destination: payment.subscription.success
+          contentType: application/json
 
 api:
   url: 
     payments: payments:8080 
-    
-
+server:
+  port: 8086

@@ -18,9 +18,6 @@ import mp.domain.Purchased;
 import mp.domain.Subscribed;
 
 
-//@Data
-//<<< DDD / Aggregate Root
-
 @Getter
 @Setter
 @NoArgsConstructor
@@ -36,19 +33,15 @@ public class Payment {
     private String item;
     private int amount;
     private String status;
+    private int usedPoint;
 
-    @Column(name="createdAt")
+    @Column(name = "createdAt")
     private LocalDateTime createdAt;
 
     @PostPersist
     public void onPostPersist() {
-        Purchased purchased = new Purchased(this);
-        purchased.setId(this.getId());
-        purchased.publishAfterCommit();
-
-        Subscribed subscribed = new Subscribed(this);
-        purchased.setId(this.getId());
-        subscribed.publishAfterCommit();
+        // 엔티티의 책임: 이벤트 객체 생성, 외부 시스템 호출은 서비스에 위임!
+        PaymentEventPublisher.publishEvents(this);
     }
 
     public static PaymentRepository repository() {
@@ -58,4 +51,3 @@ public class Payment {
         return paymentRepository;
     }
 }
-//>>> DDD / Aggregate Root
