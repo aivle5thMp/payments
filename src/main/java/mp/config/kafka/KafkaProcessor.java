@@ -11,7 +11,9 @@ public interface KafkaProcessor {
 
     String POINTS_OUTPUT = "points-out";
     String SUBSCRIPTION_OUTPUT = "subscription-out";
-
+    
+    @Output("points-out")
+    MessageChannel pointsOut();
     @Output(POINTS_OUTPUT)
     MessageChannel pointsOutbound();
 

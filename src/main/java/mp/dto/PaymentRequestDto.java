@@ -14,5 +14,4 @@ public class PaymentRequestDto {
     private UUID userId;
     private String item;
     private Integer amount;
-    private Integer point;
 }

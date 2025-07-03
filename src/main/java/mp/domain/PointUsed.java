@@ -14,6 +14,5 @@ public class PointUsed extends AbstractEvent{
     public PointUsed(Payment payment) {
         super(payment);
         this.userId = payment.getUserId().toString();
-        this.point = payment.getUsedPoint();
     }
 }

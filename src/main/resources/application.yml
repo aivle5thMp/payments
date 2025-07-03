@@ -45,7 +45,7 @@ spring:
           destination: mp
           contentType: application/json
         points-out:
-          destination: payment.points.success
+          destination: payment.points.v1
           contentType: application/json
         subscription-out:
           destination: payment.subscription.success
@@ -96,10 +96,10 @@ spring:
           destination: mp
           contentType: application/json
         points-out:
-          destination: payment.points.success
+          destination: payment.points.v1
           contentType: application/json
         subscription-out:
-          destination: payment.subscription.success
+          destination: payment.subscription.success.v1
           contentType: application/json
 
 api:

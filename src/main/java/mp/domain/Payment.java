@@ -33,7 +33,6 @@ public class Payment {
     private String item;
     private int amount;
     private String status;
-    private int usedPoint;
 
     @Column(name = "createdAt")
     private LocalDateTime createdAt;

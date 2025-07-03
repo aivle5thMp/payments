@@ -36,16 +36,5 @@ public class PaymentEventPublisher {
                 .setHeader("type", subscribed.getEventType())
                 .build()
         );
-
-        // 3. PointUsed (포인트 사용 토픽)
-        if (payment.getUsedPoint() > 0) {
-            PointUsed pointUsed = new PointUsed(payment);
-            kafkaProcessor.pointsOutbound().send(
-                MessageBuilder.withPayload(pointUsed)
-                    .setHeader(MessageHeaders.CONTENT_TYPE, MimeTypeUtils.APPLICATION_JSON)
-                    .setHeader("type", pointUsed.getEventType())
-                    .build()
-            );
-        }
     }
 }
