@@ -68,6 +68,17 @@ server:
 
 spring:
   profiles: docker
+  application:
+    name: payments
+  datasource:
+    url: jdbc:h2:mem:paymentsdb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    driver-class-name: org.h2.Driver
+    username: sa
+    password: 1234
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
   jpa:
     properties:
       hibernate:
@@ -88,22 +99,21 @@ spring:
                 value:
                   serde: org.apache.kafka.common.serialization.Serdes$StringSerde
       bindings:
-        event-in:
-          group: payments
-          destination: mp
-          contentType: application/json
-        event-out:
-          destination: mp
-          contentType: application/json
         points-out:
           destination: payment.points.v1
           contentType: application/json
         subscription-out:
-          destination: payment.subscription.success.v1
+          destination: payment.subscription.v1
           contentType: application/json
+
+logging:
+  level:
+    org.hibernate.type: trace
+    org.springframework.cloud: debug
+
+server:
+  port: 8086
 
 api:
   url: 
-    payments: payments:8080 
-server:
-  port: 8086
+    payments: http://gateway:8089

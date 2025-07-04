@@ -20,6 +20,12 @@ public class Purchased extends AbstractEvent {
 
     public Purchased(Payment aggregate) {
         super(aggregate);
+        this.id = aggregate.getId();
+        this.userId = aggregate.getUserId();
+        this.item = aggregate.getItem();
+        this.amount = aggregate.getAmount();
+        this.status = aggregate.getStatus();
+        this.createdAt = aggregate.getCreatedAt();
     }
 
     public Purchased() {

@@ -39,8 +39,33 @@ public class Payment {
 
     @PostPersist
     public void onPostPersist() {
-        // 엔티티의 책임: 이벤트 객체 생성, 외부 시스템 호출은 서비스에 위임!
-        PaymentEventPublisher.publishEvents(this);
+        System.out.println("=== Payment.onPostPersist() ===");
+        System.out.println("Payment ID: " + this.getId());
+        System.out.println("User ID: " + this.getUserId());
+        System.out.println("Status: " + this.getStatus());
+        System.out.println("Amount: " + this.getAmount());
+        System.out.println("Item: " + this.getItem());
+        
+        // 결제 상태가 승인된 경우에만 이벤트 발행
+        if ("APPROVED".equals(this.status)) {
+            // 구독 결제인 경우
+            if (this.item != null && this.item.toLowerCase().contains("subscription")) {
+                System.out.println("Publishing Subscribed event for subscription payment...");
+                Subscribed subscribed = new Subscribed(this);
+                subscribed.publishAfterCommit();
+                System.out.println("Subscribed event published successfully");
+            }
+            // 일반 결제인 경우
+            else {
+                System.out.println("Publishing Purchased event for regular payment...");
+                Purchased purchased = new Purchased(this);
+                purchased.publishAfterCommit();
+                System.out.println("Purchased event published successfully");
+            }
+        } else {
+            System.out.println("Payment status is not APPROVED. No events will be published.");
+        }
+        System.out.println("=== Payment.onPostPersist() End ===");
     }
 
     public static PaymentRepository repository() {
